@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title></title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/black.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="rust-além-de-oo" class="slide level1">
+<h1>Rust: além de OO</h1>
+</section>
+<section id="quem-sou-eu" class="slide level1">
+<h1>Quem sou eu?</h1>
+<ul>
+<li class="fragment">Preguiçoso.</li>
+<li class="fragment">Autor da Boost.Http (<strong>NÃO</strong> é uma biblioteca oficial Boost (ainda!)).</li>
+<li class="fragment">Entusiasta de software livre.</li>
+<li class="fragment">Programador Rust, C++, Qt, MongoDB...</li>
+<li class="fragment">Mais novo interesse: escola austríaca de economia.</li>
+</ul>
+</section>
+<section id="organização-oo" class="slide level1">
+<h1>Organização: OO</h1>
+<p>Ideias:</p>
+<ul>
+<li class="fragment">Tipo abstrado de dados.</li>
+<li class="fragment">Herança.</li>
+<li class="fragment">Polimorfismo.</li>
+</ul>
+</section>
+<section id="oo-exemplo-1" class="slide level1">
+<h1>OO: Exemplo #1</h1>
+<p>Abstração de <strong>dados</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Shape {}
+
+<span class="kw">public</span> <span class="kw">class</span> Circle <span class="kw">extends</span> Shape {}
+
+<span class="kw">public</span> <span class="kw">class</span> Triangle <span class="kw">extends</span> Shape {}</code></pre></div>
+</section>
+<section id="oo-exemplo-2" class="slide level1">
+<h1>OO: Exemplo #2</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Shape {
+    <span class="kw">abstract</span> <span class="dt">double</span> <span class="fu">area</span>();
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Circle <span class="kw">extends</span> Shape {
+    <span class="dt">double</span> <span class="fu">area</span>() {
+        <span class="co">// pi * r²</span>
+    }
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Triangle <span class="kw">extends</span> Shape {
+    <span class="dt">double</span> <span class="fu">area</span>() {
+        <span class="co">// b * h / 2.0</span>
+    }
+}</code></pre></div>
+</section>
+<section id="oo-exemplo-2-1" class="slide level1">
+<h1>OO: Exemplo #2</h1>
+<ul>
+<li class="fragment">Hierarquia aberta para tipos e fechada para algoritmos.</li>
+<li class="fragment">Algoritmos de aridade 1.</li>
+</ul>
+</section>
+<section id="oo-exemplo-3" class="slide level1">
+<h1>OO: Exemplo #3</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Shape {
+    <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">accept</span>(Visitor v);
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Circle <span class="kw">extends</span> Shape {
+    <span class="dt">void</span> <span class="fu">accept</span>(Visitor v) {
+        v.<span class="fu">visit</span>(<span class="kw">this</span>);
+    }
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Triangle <span class="kw">extends</span> Shape {<span class="co">/* ... */</span>}
+
+<span class="kw">public</span> <span class="kw">class</span> Visitor {
+    <span class="dt">void</span> <span class="fu">visit</span>(Circle c) {<span class="co">/*...*/</span>}
+    <span class="dt">void</span> <span class="fu">visit</span>(Triangle t) {<span class="co">/*...*/</span>}
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Collides <span class="kw">extends</span> Visitor {<span class="co">/*...*/</span>}</code></pre></div>
+</section>
+<section id="exemplo-3" class="slide level1">
+<h1>Exemplo #3</h1>
+<ul>
+<li class="fragment">Visitor.</li>
+<li class="fragment">Hierarquia aberta a novos algoritmos.</li>
+<li class="fragment">Boilerplate everywhere.</li>
+</ul>
+</section>
+<section id="exemplo-4-não-oo-hacky" class="slide level1">
+<h1>Exemplo #4: não-OO (hacky)</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Circle <span class="kw">extends</span> Shape {
+    <span class="co">// ...</span>
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Triangle <span class="kw">extends</span> Shape {
+    <span class="co">// ...</span>
+}
+
+<span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Algorithms {
+    <span class="dt">double</span> <span class="fu">area</span>(Shape o) {
+        <span class="kw">if</span> (o <span class="kw">instanceof</span> Circle) {
+            <span class="co">// pi * r²</span>
+        } <span class="kw">else</span> <span class="kw">if</span> (o <span class="kw">instanceof</span> Triangle) {
+            <span class="co">// b * h / 2.0</span>
+        }
+    }
+}</code></pre></div>
+</section>
+<section id="exemplo-5-aridade-2" class="slide level1">
+<h1>Exemplo #5 (aridade 2)</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Shape {
+    <span class="kw">abstract</span> <span class="dt">boolean</span> <span class="fu">collides</span>(Shape o);
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Circle <span class="kw">extends</span> Shape {
+    <span class="dt">boolean</span> <span class="fu">collides</span>(Shape o) {
+        <span class="kw">if</span> (o <span class="kw">instanceof</span> Circle) {
+            <span class="co">// algorithm C</span>
+        } <span class="kw">else</span> <span class="kw">if</span> (o <span class="kw">instanceof</span> Triangle) {
+            <span class="co">// algorithm C-T</span>
+        }
+    }
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Triangle <span class="kw">extends</span> Shape {
+    <span class="dt">boolean</span> <span class="fu">collides</span>(Shape o) {
+        <span class="kw">if</span> (o <span class="kw">instanceof</span> Circle) {
+            <span class="co">// algorithm C-T</span>
+        } <span class="kw">else</span> <span class="kw">if</span> (o <span class="kw">instanceof</span> Triangle) {
+            <span class="co">// algorithm T</span>
+        }
+    }
+}</code></pre></div>
+</section>
+<section id="exemplo-5" class="slide level1">
+<h1>Exemplo 5</h1>
+<ul>
+<li class="fragment">Continua hacky.</li>
+<li class="fragment">Aridade 2.</li>
+<li class="fragment">Tipos são agrupados, mas algoritmos ficam espalhados.</li>
+</ul>
+<!-- A visão de cada algoritmo nunca é completa sem o resto do código -->
+</section>
+<section id="exemplo-6" class="slide level1">
+<h1>Exemplo #6</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Shape {
+    <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">accept</span>(Visitor v);
+}
+
+<span class="kw">public</span> <span class="kw">class</span> Circle <span class="kw">extends</span> Shape {<span class="co">/*...*/</span>}
+<span class="kw">public</span> <span class="kw">class</span> Triangle <span class="kw">extends</span> Shape {<span class="co">/*...*/</span>}
+
+<span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> Visitor {
+    <span class="dt">void</span> <span class="fu">visit</span>(Circle c) {<span class="co">/*...*/</span>}
+    <span class="dt">void</span> <span class="fu">visit</span>(Triangle t) {<span class="co">/*...*/</span>}
+
+    <span class="dt">boolean</span> <span class="fu">evaluate</span>(Shape a, Shape b) {<span class="co">/*...*/</span>}
+
+    <span class="kw">abstract</span> <span class="dt">boolean</span> <span class="fu">evaluate</span>(Triangle t1, Triangle t2);
+    <span class="kw">abstract</span> <span class="dt">boolean</span> <span class="fu">evaluate</span>(Triangle t, Circle c);
+    <span class="kw">abstract</span> <span class="dt">boolean</span> <span class="fu">evaluate</span>(Circle c, Triangle t);
+    <span class="kw">abstract</span> <span class="dt">boolean</span> <span class="fu">evaluate</span>(Circle c1, Cricle c2);
+}
+
+<span class="kw">public</span> <span class="kw">class</span> CollidesVisitor <span class="kw">extends</span> Visitor {
+    <span class="dt">boolean</span> <span class="fu">evaluate</span>(Triangle t1, Triangle t2) {<span class="co">/*...*/</span>}
+    <span class="dt">boolean</span> <span class="fu">evaluate</span>(Triangle t, Circle c) {<span class="co">/*...*/</span>}
+    <span class="dt">boolean</span> <span class="fu">evaluate</span>(Circle c, Triangle t) {<span class="co">/*...*/</span>}
+    <span class="dt">boolean</span> <span class="fu">evaluate</span>(Circle c1, Cricle c2) {<span class="co">/*...*/</span>}
+}</code></pre></div>
+</section>
+<section id="exemplo-7" class="slide level1">
+<h1>Exemplo #7</h1>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">abstract</span> <span class="kw">class</span> Expression {
+    <span class="kw">public</span> <span class="kw">abstract</span> object <span class="fu">Accept</span>(Visitor v);
+}
+
+<span class="kw">class</span> ConstantExpression : Expression {
+    <span class="kw">public</span> <span class="dt">int</span> constant;
+
+    <span class="kw">public</span> override object <span class="fu">Accept</span>(Visitor v) {
+        <span class="kw">return</span> v.<span class="fu">VisitConstant</span>(<span class="kw">this</span>);
+    }
+}
+
+<span class="kw">class</span> SumExpression : Expression {
+    <span class="kw">public</span> Expression left, right;
+
+    <span class="kw">public</span> override object <span class="fu">Accept</span>(Visitor v) {
+        <span class="kw">return</span> v.<span class="fu">VisitSum</span>(<span class="kw">this</span>);
+    }
+}
+
+<span class="kw">interface</span> Visitor {
+    object <span class="fu">VisitConstant</span>(ConstantExpression e);
+    object <span class="fu">VisitSum</span>(SumExpression e);
+}
+
+<span class="kw">class</span> EvaluateVisitor : Visitor {
+    <span class="kw">public</span> object <span class="fu">VisitConstant</span>(ConstantExpression e) {
+        <span class="kw">return</span> e.<span class="fu">constant</span>;
+    }
+
+    <span class="kw">public</span> object <span class="fu">VisitSum</span>(SumExpression e) {
+        <span class="kw">return</span> (<span class="dt">int</span>)e.<span class="fu">left</span>.<span class="fu">Accept</span>(<span class="kw">this</span>)
+            + (<span class="dt">int</span>)e.<span class="fu">right</span>.<span class="fu">Accept</span>(<span class="kw">this</span>);
+    }
+}</code></pre></div>
+</section>
+<section id="exemplo-8" class="slide level1">
+<h1>Exemplo 8</h1>
+<ul>
+<li class="fragment">Duas hierarquias: <code>Animal</code> e <code>Transporte</code>.</li>
+<li class="fragment"><p>Pergunta: animal <code>a</code> pode usar transporte <code>t</code>?</p>
+<p>bool is_valid(Animal a, Transport t);</p></li>
+</ul>
+</section>
+<section id="oo-outras-considerações" class="slide level1">
+<h1>OO: Outras considerações</h1>
+<ul>
+<li class="fragment">Multimethods (parcialmente abordado aqui).</li>
+<li class="fragment">Problema do diamante (mais famoso). Ainda visão aridade-1.</li>
+</ul>
+</section>
+<section id="abordagem-rust" class="slide level1">
+<h1>Abordagem Rust</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> MyBool {
+    MyTrue,
+    MyFalse
+}
+
+<span class="kw">fn</span> is_odd(x: <span class="dt">i32</span>) -&gt; MyBool {
+    <span class="kw">if</span> x % <span class="dv">2</span> != <span class="dv">0</span> {
+        MyBool::MyTrue
+    } <span class="kw">else</span> {
+        MyBool::MyFalse
+    }
+}</code></pre></div>
+</section>
+<section id="rust-enum-prático" class="slide level1">
+<h1>Rust, enum prático</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> MyBool {
+    MyTrue,
+    MyFalse
+}
+
+<span class="kw">fn</span> is_odd(x: MyBool) -&gt; <span class="dt">bool</span> {
+    <span class="kw">match</span> x {
+        MyBool::MyTrue =&gt; <span class="cn">true</span>,
+        MyBool::MyFalse =&gt; <span class="cn">false</span>,
+    }
+}</code></pre></div>
+</section>
+<section id="rust-poderoso-enum" class="slide level1">
+<h1>Rust, poderoso enum</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> <span class="dt">Option</span> {
+    <span class="cn">Some</span>(<span class="dt">i32</span>),
+    <span class="cn">None</span>
+}
+
+<span class="kw">fn</span> lexical_cast(text: <span class="dt">String</span>) -&gt; <span class="dt">Option</span> {
+    <span class="co">// ...</span>
+
+    <span class="kw">return</span> <span class="dt">Option</span>::<span class="cn">None</span>;
+
+    <span class="co">// ...</span>
+
+    <span class="kw">return</span> <span class="dt">Option</span>::<span class="cn">Some</span>(val);
+}</code></pre></div>
+</section>
+<section id="hierarquias-com-enum" class="slide level1">
+<h1>Hierarquias com <code>enum</code></h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Shape {
+    Circle(<span class="dt">f32</span>),
+    Triangle(<span class="dt">f32</span>, <span class="dt">f32</span>),
+}
+
+<span class="co">// Algoritmo não-macarrônico</span>
+<span class="kw">fn</span> area(x: Shape) -&gt; <span class="dt">f32</span> {
+    <span class="kw">match</span> x {
+        Shape::Circle(r) =&gt; PI * r * r,
+        Shape::Triangle(b, h) =&gt; b * h / <span class="dv">2.0</span>,
+    }
+}</code></pre></div>
+</section>
+<section id="mais-hierarquias" class="slide level1">
+<h1>Mais hierarquias</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Shape {
+    Circle(<span class="co">/*...*/</span>),
+    Triangle(<span class="co">/*...*/</span>),
+}
+
+<span class="kw">fn</span> collides(a: Shape, b: Shape) -&gt; <span class="dt">bool</span> {
+    <span class="kw">match</span> (a, b) {
+        (Shape::Circle(<span class="co">/*...*/</span>), Shape::Circle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// C-C</span>
+        }
+        (Shape::Circle(<span class="co">/*...*/</span>), Shape::Triangle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// C-T</span>
+        }
+        (Shape::Triangle(<span class="co">/*...*/</span>), Shape::Circle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// T-C</span>
+        }
+        (Shape::Triangle(<span class="co">/*...*/</span>), Shape::Triangle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// T-T</span>
+        }
+    }
+}</code></pre></div>
+</section>
+<section id="eliminando-redundâncias" class="slide level1">
+<h1>Eliminando redundâncias</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Shape {
+    Circle(<span class="co">/*...*/</span>),
+    Triangle(<span class="co">/*...*/</span>),
+}
+
+<span class="kw">fn</span> collides(a: Shape, b: Shape) -&gt; <span class="dt">bool</span> {
+    <span class="kw">match</span> (a, b) {
+        (Shape::Circle(<span class="co">/*...*/</span>), Shape::Circle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// C-C</span>
+        }
+        (Shape::Circle(<span class="co">/*...*/</span>), Shape::Triangle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// C-T</span>
+        }
+        (Shape::Triangle(<span class="co">/*...*/</span>), Shape::Triangle(<span class="co">/*...*/</span>)) =&gt; {
+            <span class="co">// T-T</span>
+        }
+        _ =&gt; {
+            collides(b, a)
+        }
+    }
+}</code></pre></div>
+</section>
+<section id="animal-e-transporte" class="slide level1">
+<h1>Animal e transporte</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Animal { Horse, Dog, Cat }
+<span class="kw">enum</span> Transport { Car, Airplane }
+
+<span class="kw">fn</span> is_valid(a: Animal, t: Transport) -&gt; <span class="dt">bool</span> {
+    <span class="kw">match</span> (a, t) {
+        (Animal::Horse, Transport::Car) =&gt; <span class="cn">false</span>,
+        (Animal::Dog, Transport::Car) =&gt; <span class="cn">true</span>,
+        (Animal::Cat, Transport::Car) =&gt; <span class="cn">true</span>,
+        (Animal::Horse, Transport::Airplane) =&gt; <span class="cn">true</span>,
+        (Animal::Dog, Transport::Airplane) =&gt; <span class="cn">true</span>,
+        (Animal::Cat, Transport::Airplane) =&gt; <span class="cn">true</span>,
+    }
+}</code></pre></div>
+</section>
+<section id="flexibilidade" class="slide level1">
+<h1>Flexibilidade</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">enum</span> Animal {
+    Cat, <span class="co">// ...</span>
+}
+
+<span class="kw">enum</span> AnimalSomething {
+    Insect, <span class="co">// ...</span>
+}
+
+<span class="kw">fn</span> convert(a: Animal) -&gt; AnimalSomething {
+    Animal::Cat | Animal::Dog =&gt; AnimalSomething::Ugly,
+    Animal::Whale =&gt; <span class="co">/*...*/</span>,
+    <span class="co">// ...</span>
+}</code></pre></div>
+</section>
+<section id="flexibilidade-1" class="slide level1">
+<h1>Flexibilidade++</h1>
+<div class="sourceCode"><pre class="sourceCode rust"><code class="sourceCode rust"><span class="kw">struct</span> Triangle {
+    b: <span class="dt">f32</span>,
+    h: <span class="dt">f32</span>
+}
+
+<span class="kw">struct</span> Circle {<span class="co">/*...*/</span>}
+
+<span class="kw">enum</span> Shape {
+    Triangle(Triangle),
+    Circle(Circle),
+    <span class="co">// ...</span>
+}
+
+<span class="kw">enum</span> ClosedShape {
+    Triangle(Triangle),
+    Circle(Circle),
+}</code></pre></div>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
